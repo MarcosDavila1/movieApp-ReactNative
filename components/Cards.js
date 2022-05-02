@@ -1,7 +1,21 @@
-import { View, Text } from 'react-native'
+import { ScrollView, Image, StyleSheet } from 'react-native'
 import React, {useState, useEffect} from 'react'
 
-export default function Cards() {
+export default function Cards({movieSearch}) {
+
+    const styles = StyleSheet.create({
+      container: {
+        paddingTop: 50,
+        display: 'flex',
+        flexDirection: 'row'
+      },
+      poster: {
+        width: 200,
+        height: 400,
+        margin: 10,
+        borderRadius: 15
+      }
+    })
 
     const [movies, setMovies] = useState([])
 
@@ -13,9 +27,15 @@ export default function Cards() {
     }, [])
     
   return (
-    <View>
-        {}
-      <Text>Acá van a ir las Cards</Text>
-    </View>
+    <ScrollView horizontal style={styles.container}>
+      {movieSearch.length > 0 
+        ? movieSearch.map(movie => (
+          <Image key={movie.imdbID} style={styles.poster} source={{uri: `${movie.Poster}`}}/>
+        ))
+        : movies?.map(movie => (
+          <Image key={movie.imdbID} style={styles.poster} source={{uri: `${movie.Poster}`}}/>
+        ))
+      }      
+    </ScrollView>
   )
 }
