@@ -1,6 +1,6 @@
-import {useState} from 'react'
+import {useState, useRef} from 'react'
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Pressable } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Pressable, Alert, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import Cards from './components/Cards';
 import Constants from 'expo-constants'
 
@@ -8,11 +8,14 @@ export default function App() {
 
   const [search, setSearch] = useState('')
   const [movieSearch, setMovieSearch] = useState([])
+  const input = useRef()
 
   function handlePress(){
-    fetch(`http://www.omdbapi.com/?apikey=191d8f10&s=${search}`)
-      .then(res => res.json())
-      .then(res => setMovieSearch(res.Search))
+    search !== '' 
+      ? fetch(`http://www.omdbapi.com/?apikey=191d8f10&s=${search}`)
+        .then(res => res.json())
+        .then(res => setMovieSearch(res.Search), Keyboard.dismiss(), input.current.clear())
+      : Alert.alert('Please, type a movie for search')
   }
 
   return (    
@@ -26,6 +29,8 @@ export default function App() {
         style={styles.input} 
         placeholder='Ex: Spider man' 
         onChangeText={text => setSearch(text)}
+        placeholderTextColor='#fff'
+        ref={input}
       />
 
       <Pressable style={styles.btn} onPress={handlePress}>

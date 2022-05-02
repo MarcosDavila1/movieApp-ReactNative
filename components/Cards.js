@@ -21,14 +21,14 @@ export default function Cards({movieSearch}) {
 
     useEffect(() => {
         function getMovies(){
-            const get = fetch('http://www.omdbapi.com/?apikey=191d8f10&s=spider').then(res => res.json()).then(res => setMovies(res.Search))
+            const get = fetch('http://www.omdbapi.com/?apikey=191d8f10&s=mickey').then(res => res.json()).then(res => setMovies(res.Search))
         }
         getMovies()
     }, [])
-    
+
   return (
     <ScrollView horizontal style={styles.container}>
-      {movieSearch.length > 0 
+      {movieSearch?.length > 0 
         ? movieSearch.map(movie => (
           <Image key={movie.imdbID} style={styles.poster} source={{uri: `${movie.Poster}`}}/>
         ))
