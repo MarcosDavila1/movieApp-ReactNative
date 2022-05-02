@@ -1,6 +1,6 @@
 import {useState, useRef} from 'react'
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, Pressable, Alert, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Pressable, Alert, Keyboard } from 'react-native';
 import Cards from './components/Cards';
 import Constants from 'expo-constants'
 
@@ -14,7 +14,7 @@ export default function App() {
     search !== '' 
       ? fetch(`http://www.omdbapi.com/?apikey=191d8f10&s=${search}`)
         .then(res => res.json())
-        .then(res => setMovieSearch(res.Search), Keyboard.dismiss(), input.current.clear())
+        .then(res => setMovieSearch(res.Search), Keyboard.dismiss(), input.current.clear(), setSearch(''))
       : Alert.alert('Please, type a movie for search')
   }
 
